@@ -1,12 +1,9 @@
-import { ChangeEvent, useEffect, useState, useRef } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useEffect, useState, useRef } from 'react'
 import './App.css'
 import $ from 'jquery'
 function App() {
   const inputRef = useRef(null)
-  const [count, setCount] = useState(0)
-  const [textToType, setTextToType] = useState<string>('hello /n from')
+  const [textToType] = useState<string>('hello /n from')
   const [typingText, setTypingText] = useState<string>('')
   const [calculs, setCalculs] = useState<boolean>(true)
   const [WPM, setWPM] = useState<Float>(0)
@@ -14,7 +11,6 @@ function App() {
   const [ACC, setACC] = useState<Float>(0)
   const [textShown, setTextShown] = useState<string>(textToType)
   const [startTime, setStartTime] = useState<number | null>(null)
-  const [incorrectCharacterCount, setIncorrectCharacterCount] = useState(0)
 
   useEffect(() => {
     $('#textArea').focus()
