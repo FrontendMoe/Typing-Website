@@ -211,7 +211,7 @@ function App() {
                           ? 'text-[#a8a6b3]'
                           : typingText[i] !== textToType[i]
                           ? 'text-[#ff4e3e]'
-                          : ''
+                          : 'text-[#624ebb]'
                       } px-1 `}
                     >
                       {textShown[i]}
