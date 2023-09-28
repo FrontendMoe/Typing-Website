@@ -132,7 +132,7 @@ function App() {
       ></BottomBox>
       <nav className="flex w-full justify-between">
         <div className="pr-1 flex items-center ">
-          <p className="font-[600]">typing.works </p>
+          <p className="font-[600]">typing.frontendmoe </p>
           <div className="h-[13px] w-[2px] border-2 border-[#fec000] bg-[#fec000]"></div>
         </div>
         {/* tools */}
@@ -205,21 +205,32 @@ function App() {
                   <br />
                 ) : (
                   !(textShown[i - 1] === '/' && textShown[i] === 'n') && (
-                    <span
-                      className={`w-[5px]  ${
-                        i >= typingText.length
-                          ? 'text-[#a8a6b3]'
-                          : typingText[i] !== textToType[i]
-                          ? 'text-[#ff4e3e]'
-                          : 'text-[#624ebb]'
-                      } px-1 `}
-                    >
-                      {textToType[i] === ' ' &&
-                      typingText.length >= i &&
-                      typingText[i] !== ' '
-                        ? '_'
-                        : textToType[i]}
-                    </span>
+                    <>
+                      <span
+                        className={`w-[5px]  ${
+                          i >= typingText.length
+                            ? 'text-[#a8a6b3]'
+                            : typingText[i] !== textToType[i]
+                            ? 'text-[#ff4e3e]'
+                            : 'text-[#624ebb]'
+                        } px-1 `}
+                      >
+                        {textToType[i] === ' ' &&
+                        typingText.length >= i &&
+                        typingText[i] !== ' '
+                          ? '_'
+                          : textToType[i]}
+                      </span>
+                      {i === typingText.length && (
+                        <span
+                          style={{
+                            height: '13px',
+                            marginTop: '-15px !important',
+                          }}
+                          className="h-[13px]  animate-pulse  text-xl -mt-4 w-[2px] border-2 border-[#fec000] bg-[#fec000]"
+                        ></span>
+                      )}
+                    </>
                   )
                 ),
               )}

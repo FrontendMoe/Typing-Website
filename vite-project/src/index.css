@@ -5,3 +5,11 @@
 body {
   font-family: 'Noto Sans KR', sans-serif;
 }
+@keyframes pulse {
+  50% {
+    opacity: 0.1;
+  }
+}
+.animate-pulse {
+  animation: pulse 0.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
