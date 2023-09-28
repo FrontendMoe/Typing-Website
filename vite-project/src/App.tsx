@@ -207,7 +207,11 @@ function App() {
                   !(textShown[i - 1] === '/' && textShown[i] === 'n') && (
                     <span
                       className={`w-[5px]  ${
-                        i >= typingText.length ? '' : 'text-red-700'
+                        i >= typingText.length
+                          ? 'text-[#a8a6b3]'
+                          : typingText[i] !== textToType[i]
+                          ? 'text-[#ff4e3e]'
+                          : ''
                       } px-1 `}
                     >
                       {textShown[i]}
