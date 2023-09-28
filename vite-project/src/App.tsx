@@ -4,6 +4,7 @@ import $ from 'jquery'
 import repost from './assets/repost.svg'
 import { AiOutlineHeart } from 'react-icons/ai'
 import { FiMoreHorizontal } from 'react-icons/fi'
+import { MdFullscreen, MdFullscreenExit } from 'react-icons/md'
 import Login from './components/login'
 function App() {
   const inputRef = useRef(null)
@@ -11,6 +12,7 @@ function App() {
   const [typingText, setTypingText] = useState<string>('')
   const [calculs, setCalculs] = useState<boolean>(true)
   const [showLogin, setShowLogin] = useState<boolean>(true)
+  const [fullscreen, setFullScreen] = useState<boolean>(false)
   const [WPM, setWPM] = useState<GLfloat>(0)
   const [CPM, setCPM] = useState<GLfloat>(0)
   const [ACC, setACC] = useState<number>(100) // Initialize accuracy to 100%
@@ -87,7 +89,40 @@ function App() {
 
     return parseFloat(accuracy) // Return accuracy as a percentage
   }
+  function toggleFullscreen() {
+    if (
+      document.fullscreenElement ||
+      document.webkitFullscreenElement ||
+      document.mozFullScreenElement ||
+      document.msFullscreenElement
+    ) {
+      setFullScreen(false)
 
+      // If in fullscreen mode, exit fullscreen
+      if (document.exitFullscreen) {
+        document.exitFullscreen()
+      } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen()
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen()
+      } else if (document.msExitFullscreen) {
+        document.msExitFullscreen()
+      }
+    } else {
+      setFullScreen(true)
+      // If not in fullscreen mode, enter fullscreen
+      const element = document.documentElement
+      if (element.requestFullscreen) {
+        element.requestFullscreen()
+      } else if (element.mozRequestFullScreen) {
+        element.mozRequestFullScreen()
+      } else if (element.webkitRequestFullscreen) {
+        element.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT)
+      } else if (element.msRequestFullscreen) {
+        element.msRequestFullscreen()
+      }
+    }
+  }
   useEffect(() => {
     const startIndex = typingText.length
 
@@ -100,19 +135,38 @@ function App() {
   }, [textShown])
   return (
     <div className="bg-[#fbfbfb]  flex h-screen flex-col justify-between px-[2%] py-[1%]">
-      {showLogin && <Login></Login>}
+      <Login closeLogin={() => setShowLogin(false)} isOpen={showLogin}></Login>
+
       <nav className="flex w-full justify-between">
         <div className="pr-1 flex items-center ">
           <p className="font-[600]">typing.works </p>
           <div className="h-[13px] w-[2px] border-2 border-[#fec000] bg-[#fec000]"></div>
         </div>
         {/* tools */}
-        <div className="w-[150px] border"> tools</div>
+        <div className="w-[150px] flex flex-row-reverse ">
+          <button
+            onClick={() => setShowLogin(true)}
+            style={{ boxShadow: 'rgba(0, 0, 0, 0.1) 0rem 0.2rem 0.6rem 0rem' }}
+            className="p-1 font-[500] px-2 text-[12px] rounded "
+          >
+            Log in
+          </button>
+          <button
+            onClick={() => toggleFullscreen()}
+            style={{ boxShadow: 'rgba(0, 0, 0, 0.1) 0rem 0.2rem 0.6rem 0rem' }}
+            className="p-1 font-[500] px-2 text-[16px] rounded "
+          >
+            {fullscreen ? (
+              <MdFullscreenExit></MdFullscreenExit>
+            ) : (
+              <MdFullscreen></MdFullscreen>
+            )}
+          </button>
+        </div>
       </nav>
       {/* Body */}
       <div className="flex space-x-4 w-full justify-center">
         {/* Calculs */}
-
         <div
           className={`${
             calculs && 'bg-white border'
