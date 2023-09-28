@@ -21,10 +21,10 @@ export default function BottomBox({ isOpen, close }) {
     return null // Return nothing if the form is closed
   }
   return (
-    <div className="fixed  flex items-center justify-center  top-0 left-0 h-screen w-screen">
+    <div className="fixed z-10  flex items-center justify-center  top-0 left-0 h-screen w-screen">
       <div
         style={{ boxShadow: 'rgba(0, 0, 0, 0.1) 0rem 0.4rem 0.8rem 0rem' }}
-        className="BottomBox bg-white border rounded-xl  w-[70%] h-[80%]"
+        className="BottomBox z-20 bg-white border rounded-xl  w-[70%] h-[80%]"
       >
         <div
           onClick={() => close()}

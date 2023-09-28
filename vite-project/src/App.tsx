@@ -194,10 +194,10 @@ function App() {
 
         {/* Text */}
         <div
-          className="w-[80%] text-xl lg:w-[65%]"
+          className="w-[80%] relative  z-0 text-xl lg:w-[65%]"
           onClick={() => $('#textArea').focus()}
         >
-          <p className="text-[40px] leading-[60px]">
+          <p className="text-[40px]  leading-[60px]">
             {Array(textToType.length)
               .fill('')
               .map((_, i) =>
