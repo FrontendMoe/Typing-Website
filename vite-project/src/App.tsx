@@ -6,21 +6,26 @@ import { AiOutlineHeart } from 'react-icons/ai'
 import { FiMoreHorizontal } from 'react-icons/fi'
 import coffee from './assets/coffee.svg'
 import { MdFullscreen, MdFullscreenExit } from 'react-icons/md'
+import { BsChevronUp } from 'react-icons/bs'
 import Login from './components/login'
 import BuyingCoffee from './components/BuyingCoffe'
+import BottomBox from './components/BottomBox'
 function App() {
   const inputRef = useRef(null)
-  const [textToType] = useState<string>('hello /n from')
+  const [textToType] = useState<string>(
+    'hello /n from other side , why do you cry',
+  )
   const [typingText, setTypingText] = useState<string>('')
   const [calculs, setCalculs] = useState<boolean>(true)
-  const [showLogin, setShowLogin] = useState<boolean>(true)
+  const [showLogin, setShowLogin] = useState<boolean>(false)
   const [fullscreen, setFullScreen] = useState<boolean>(false)
   const [WPM, setWPM] = useState<GLfloat>(0)
   const [CPM, setCPM] = useState<GLfloat>(0)
   const [ACC, setACC] = useState<number>(100) // Initialize accuracy to 100%
   const [textShown, setTextShown] = useState<string>(textToType)
   const [startTime, setStartTime] = useState<number | null>(null)
-  const [buyingCoffee, setBuyingCoffee] = useState<boolean>(true)
+  const [buyingCoffee, setBuyingCoffee] = useState<boolean>(false)
+  const [openBottomBox, setOpenBottonBox] = useState<boolean>(false)
   useEffect(() => {
     $('#textArea').focus()
   }, [])
@@ -93,39 +98,21 @@ function App() {
     return parseFloat(accuracy) // Return accuracy as a percentage
   }
   function toggleFullscreen() {
-    if (
-      document.fullscreenElement ||
-      document.webkitFullscreenElement ||
-      document.mozFullScreenElement ||
-      document.msFullscreenElement
-    ) {
-      setFullScreen(false)
+    const element = document.documentElement as HTMLElement
 
-      // If in fullscreen mode, exit fullscreen
+    if (document.fullscreenElement) {
+      setFullScreen(false)
       if (document.exitFullscreen) {
         document.exitFullscreen()
-      } else if (document.mozCancelFullScreen) {
-        document.mozCancelFullScreen()
-      } else if (document.webkitExitFullscreen) {
-        document.webkitExitFullscreen()
-      } else if (document.msExitFullscreen) {
-        document.msExitFullscreen()
       }
     } else {
       setFullScreen(true)
-      // If not in fullscreen mode, enter fullscreen
-      const element = document.documentElement
       if (element.requestFullscreen) {
         element.requestFullscreen()
-      } else if (element.mozRequestFullScreen) {
-        element.mozRequestFullScreen()
-      } else if (element.webkitRequestFullscreen) {
-        element.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT)
-      } else if (element.msRequestFullscreen) {
-        element.msRequestFullscreen()
       }
     }
   }
+
   useEffect(() => {
     const startIndex = typingText.length
 
@@ -139,7 +126,10 @@ function App() {
   return (
     <div className="bg-[#fbfbfb]  flex h-screen flex-col justify-between px-[2%] py-[1%]">
       <Login closeLogin={() => setShowLogin(false)} isOpen={showLogin}></Login>
-
+      <BottomBox
+        close={() => setOpenBottonBox(false)}
+        isOpen={openBottomBox}
+      ></BottomBox>
       <nav className="flex w-full justify-between">
         <div className="pr-1 flex items-center ">
           <p className="font-[600]">typing.works </p>
@@ -207,7 +197,7 @@ function App() {
           className="w-[80%] text-xl lg:w-[65%]"
           onClick={() => $('#textArea').focus()}
         >
-          <p>
+          <p className="text-[40px] leading-[60px]">
             {Array(textToType.length)
               .fill('')
               .map((_, i) =>
@@ -215,7 +205,7 @@ function App() {
                   <br />
                 ) : (
                   !(textShown[i - 1] === '/' && textShown[i] === 'n') && (
-                    <span className="w-[5px] border px-1">{textShown[i]}</span>
+                    <span className="w-[5px]  px-1 ">{textShown[i]}</span>
                   )
                 ),
               )}
@@ -243,10 +233,32 @@ function App() {
         </div>
       </div>
       {/* bottom panel */}
-      <div className="">
+      <div className="space-y-[10px]">
+        <div className="text-center w-full">
+          {!openBottomBox && (
+            <div
+              onClick={() =>
+                !openBottomBox
+                  ? setOpenBottonBox(true)
+                  : setOpenBottonBox(false)
+              }
+              className="w-fit mx-auto opacity-75 cursor-pointer leading-[10px]"
+            >
+              <p className="text-[10px]">{!openBottomBox ? 'Open' : 'Close'}</p>
+              <BsChevronUp
+                className={`mx-auto text-xl duration-150 ${
+                  !openBottomBox ? 'rotate-0' : ' rotate-180'
+                }`}
+              ></BsChevronUp>
+            </div>
+          )}
+        </div>
         <div className="flex justify-between">
           <div></div>
-          <div className="w-[60%] overflow-hidden relative p-2 px-4 space-x-4 rounded-lg border flex items-center shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
+          <div
+            style={{ opacity: openBottomBox ? '0' : '1' }}
+            className="w-[60%] overflow-hidden relative p-2 px-4 space-x-4 rounded-lg border flex items-center shadow-[0_8px_30px_rgb(0,0,0,0.12)]"
+          >
             <img src={repost} alt="" />
             <div className="flex-1 ">
               <p className="font-[600] text-[14px]">

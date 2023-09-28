@@ -46,8 +46,6 @@ function BuyingCoffee({ isOpen, closeBuyMeCoffe }) {
         userSelect: 'none',
       }}
       src="https://www.buymeacoffee.com/widget/page/typing.works?description=Support%20me%20on%20Buy%20me%20a%20coffee!&amp;color=%23FFDD00"
-      bis_size='{"x":1081,"y":7,"w":420,"h":620,"abs_x":1081,"abs_y":7}'
-      __idm_id__="30580737"
     ></iframe>
   )
 }

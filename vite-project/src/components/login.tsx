@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 
 function Login({ isOpen, closeLogin }) {
   // Event listener to close the form when clicking outside
