@@ -187,7 +187,7 @@ function App() {
       <div className="">
         <div className="flex justify-between">
           <div></div>
-          <div className="w-[60%] p-2 px-4 space-x-4 rounded-lg border flex items-center shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
+          <div className="w-[60%] overflow-hidden relative p-2 px-4 space-x-4 rounded-lg border flex items-center shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
             <img src={repost} alt="" />
             <div className="flex-1 ">
               <p className="font-[600] text-[14px]">
@@ -203,6 +203,14 @@ function App() {
                 {' '}
               </FiMoreHorizontal>
             </button>
+            <div className="absolute bottom-0 w-full h-1  -left-4 bg-gray-300 border-b">
+              <div
+                style={{
+                  width: (typingText.length / textToType.length) * 100 + '%',
+                }}
+                className="transition  duration-150 bg-black h-1"
+              ></div>
+            </div>
           </div>
           <div className="shadow-[0_8px_30px_rgb(0,0,0,0.12)]">chat box</div>
         </div>
