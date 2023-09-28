@@ -6,9 +6,9 @@ function App() {
   const [textToType] = useState<string>('hello /n from')
   const [typingText, setTypingText] = useState<string>('')
   const [calculs, setCalculs] = useState<boolean>(true)
-  const [WPM, setWPM] = useState<Float>(0)
-  const [CPM, setCPM] = useState<Float>(0)
-  const [ACC, setACC] = useState<Float>(0)
+  const [WPM, setWPM] = useState<GLfloat>(0)
+  const [CPM, setCPM] = useState<GLfloat>(0)
+  const [ACC, setACC] = useState<number>(100) // Initialize accuracy to 100%
   const [textShown, setTextShown] = useState<string>(textToType)
   const [startTime, setStartTime] = useState<number | null>(null)
 
@@ -32,8 +32,9 @@ function App() {
         setStartTime(Date.now())
       } else {
         const { wpm, cpm } = calculateCPMAndWPM()
-        setWPM(wpm)
-        setCPM(cpm)
+        setWPM(parseFloat(wpm))
+        setCPM(parseFloat(cpm))
+
         const accuracy = calculateAccuracy()
         setACC(accuracy)
       }
@@ -79,9 +80,8 @@ function App() {
       ((totalCharacterCount - incorrectCount) / totalCharacterCount) *
       100
     ).toFixed(2)
-    console.log(incorrectCount)
-    console.log(totalCharacterCount)
-    return accuracy // Return accuracy as a percentage
+
+    return parseFloat(accuracy) // Return accuracy as a percentage
   }
 
   useEffect(() => {
@@ -148,7 +148,7 @@ function App() {
           <p>
             {Array(textToType.length)
               .fill('')
-              .map((e, i) =>
+              .map((_, i) =>
                 textShown[i] === '/' && textShown[i + 1] === 'n' ? (
                   <br />
                 ) : (
@@ -166,7 +166,8 @@ function App() {
             className="opacity-0 absolute"
             onChange={(e) => {
               if (
-                e.nativeEvent.inputType === 'deleteContentBackward' &&
+                (e.nativeEvent as InputEvent).inputType ===
+                  'deleteContentBackward' &&
                 typingText.length > 0
               ) {
                 // Remove the last character from typingText
