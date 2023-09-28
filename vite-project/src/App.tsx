@@ -280,7 +280,21 @@ function App() {
               onClick={() => setBuyingCoffee(true)}
               className="rounded-full relative bg-[#fec000] hover:scale-110 duration-150 cursor-pointer flex justify-center items-center h-[50px] w-[50px] shadow-[0_8px_30px_rgb(0,0,0,0.12)]"
             >
-              <img src={coffee} alt="" className="h-[70%]" />
+              {!buyingCoffee ? (
+                <img
+                  src={coffee}
+                  key={'openBuyCoffe'}
+                  alt=""
+                  className="h-[70%]"
+                />
+              ) : (
+                <img
+                  src={coffee}
+                  key={'closeBuyCoffe'}
+                  alt=""
+                  className="h-[70%]"
+                />
+              )}
             </div>
           </div>
         </div>
