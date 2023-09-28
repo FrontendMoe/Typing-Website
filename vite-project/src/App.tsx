@@ -208,7 +208,7 @@ function App() {
                 style={{
                   width: (typingText.length / textToType.length) * 100 + '%',
                 }}
-                className="transition  duration-150 bg-black h-1"
+                className="  duration-300 bg-black h-1"
               ></div>
             </div>
           </div>
