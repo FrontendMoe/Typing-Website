@@ -13,7 +13,7 @@ import BottomBox from './components/BottomBox'
 function App() {
   const inputRef = useRef(null)
   const [textToType] = useState<string>(
-    'hello /n from other side , why do you cry',
+    'hello/nfrom other side , why do you cry',
   )
   const [typingText, setTypingText] = useState<string>('')
   const [calculs, setCalculs] = useState<boolean>(true)
@@ -214,7 +214,11 @@ function App() {
                           : 'text-[#624ebb]'
                       } px-1 `}
                     >
-                      {textShown[i]}
+                      {textToType[i] === ' ' &&
+                      typingText.length >= i &&
+                      typingText[i] !== ' '
+                        ? '_'
+                        : textToType[i]}
                     </span>
                   )
                 ),
