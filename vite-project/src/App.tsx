@@ -4,8 +4,10 @@ import $ from 'jquery'
 import repost from './assets/repost.svg'
 import { AiOutlineHeart } from 'react-icons/ai'
 import { FiMoreHorizontal } from 'react-icons/fi'
+import coffee from './assets/coffee.svg'
 import { MdFullscreen, MdFullscreenExit } from 'react-icons/md'
 import Login from './components/login'
+import BuyingCoffee from './components/BuyingCoffe'
 function App() {
   const inputRef = useRef(null)
   const [textToType] = useState<string>('hello /n from')
@@ -18,6 +20,7 @@ function App() {
   const [ACC, setACC] = useState<number>(100) // Initialize accuracy to 100%
   const [textShown, setTextShown] = useState<string>(textToType)
   const [startTime, setStartTime] = useState<number | null>(null)
+  const [buyingCoffee, setBuyingCoffee] = useState<boolean>(true)
   useEffect(() => {
     $('#textArea').focus()
   }, [])
@@ -268,7 +271,18 @@ function App() {
               ></div>
             </div>
           </div>
-          <div className="shadow-[0_8px_30px_rgb(0,0,0,0.12)]">chat box</div>
+          <div className="w-fit h-fit relative">
+            <BuyingCoffee
+              closeBuyMeCoffe={() => setBuyingCoffee(false)}
+              isOpen={buyingCoffee}
+            ></BuyingCoffee>
+            <div
+              onClick={() => setBuyingCoffee(true)}
+              className="rounded-full relative bg-[#fec000] hover:scale-110 duration-150 cursor-pointer flex justify-center items-center h-[50px] w-[50px] shadow-[0_8px_30px_rgb(0,0,0,0.12)]"
+            >
+              <img src={coffee} alt="" className="h-[70%]" />
+            </div>
+          </div>
         </div>
       </div>
     </div>
