@@ -1,6 +1,9 @@
 import { useEffect, useState, useRef } from 'react'
 import './App.css'
 import $ from 'jquery'
+import repost from './assets/repost.svg'
+import { AiOutlineHeart } from 'react-icons/ai'
+import { FiMoreHorizontal } from 'react-icons/fi'
 function App() {
   const inputRef = useRef(null)
   const [textToType] = useState<string>('hello /n from')
@@ -184,8 +187,22 @@ function App() {
       <div className="">
         <div className="flex justify-between">
           <div></div>
-          <div className="w-[50%] shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
-            bottom box
+          <div className="w-[60%] p-2 px-4 space-x-4 rounded-lg border flex items-center shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
+            <img src={repost} alt="" />
+            <div className="flex-1 ">
+              <p className="font-[600] text-[14px]">
+                The Song of Achilles - Madeline Miller
+              </p>
+              <p className="text-[12px]">karlaalejandra</p>
+            </div>
+            <button>
+              <AiOutlineHeart className="text-xl opacity-60"></AiOutlineHeart>
+            </button>
+            <button>
+              <FiMoreHorizontal className="text-xl  opacity-60">
+                {' '}
+              </FiMoreHorizontal>
+            </button>
           </div>
           <div className="shadow-[0_8px_30px_rgb(0,0,0,0.12)]">chat box</div>
         </div>
