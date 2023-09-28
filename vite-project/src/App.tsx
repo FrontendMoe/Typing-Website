@@ -205,7 +205,13 @@ function App() {
                   <br />
                 ) : (
                   !(textShown[i - 1] === '/' && textShown[i] === 'n') && (
-                    <span className="w-[5px]  px-1 ">{textShown[i]}</span>
+                    <span
+                      className={`w-[5px]  ${
+                        i >= typingText.length ? '' : 'text-red-700'
+                      } px-1 `}
+                    >
+                      {textShown[i]}
+                    </span>
                   )
                 ),
               )}
