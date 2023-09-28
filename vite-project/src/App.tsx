@@ -4,17 +4,18 @@ import $ from 'jquery'
 import repost from './assets/repost.svg'
 import { AiOutlineHeart } from 'react-icons/ai'
 import { FiMoreHorizontal } from 'react-icons/fi'
+import Login from './components/login'
 function App() {
   const inputRef = useRef(null)
   const [textToType] = useState<string>('hello /n from')
   const [typingText, setTypingText] = useState<string>('')
   const [calculs, setCalculs] = useState<boolean>(true)
+  const [showLogin, setShowLogin] = useState<boolean>(true)
   const [WPM, setWPM] = useState<GLfloat>(0)
   const [CPM, setCPM] = useState<GLfloat>(0)
   const [ACC, setACC] = useState<number>(100) // Initialize accuracy to 100%
   const [textShown, setTextShown] = useState<string>(textToType)
   const [startTime, setStartTime] = useState<number | null>(null)
-
   useEffect(() => {
     $('#textArea').focus()
   }, [])
@@ -98,7 +99,8 @@ function App() {
     console.log(textShown)
   }, [textShown])
   return (
-    <div className="bg-[#fbfbfb] flex h-screen flex-col justify-between px-[2%] py-[1%]">
+    <div className="bg-[#fbfbfb]  flex h-screen flex-col justify-between px-[2%] py-[1%]">
+      {showLogin && <Login></Login>}
       <nav className="flex w-full justify-between">
         <div className="pr-1 flex items-center ">
           <p className="font-[600]">typing.works </p>
