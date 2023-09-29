@@ -40,6 +40,24 @@ function App() {
       }
     }
   }
+  const handleDeleteKeyPress = (event) => {
+    if (event.key === 'Backspace' && typingText.length > 0) {
+      // Check if the last two characters are '/n'
+      if (typingText.endsWith('/n')) {
+        // Check if the character before '/n' is a line break
+        if (typingText.charAt(typingText.length - 2) === '\n') {
+          // Remove the last two characters from typingText
+          setTypingText(typingText.slice(0, -2))
+        } else {
+          // Remove only the last character from typingText
+          setTypingText(typingText.slice(0, -1))
+        }
+      } else {
+        // Remove only the last character from typingText
+        setTypingText(typingText.slice(0, -1))
+      }
+    }
+  }
   useEffect(() => {
     // Add event listener for Enter key press
     document.addEventListener('keydown', handleEnterKeyPress)
@@ -48,6 +66,14 @@ function App() {
       document.removeEventListener('keydown', handleEnterKeyPress)
     }
   }, [currentTextIndex])
+  useEffect(() => {
+    // Add event listener for Enter key press
+    document.addEventListener('keydown', handleDeleteKeyPress)
+    // Remove the event listener when component unmounts
+    return () => {
+      document.removeEventListener('keydown', handleDeleteKeyPress)
+    }
+  }, [typingText])
   useEffect(() => {
     console.log(currentTextIndex)
     setTextToType(texts[currentTextIndex])
