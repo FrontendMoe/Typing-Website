@@ -30,12 +30,9 @@ function App() {
   const handleEnterKeyPress = (event) => {
     if (event.key === 'Enter') {
       if (inputRef.current.value.length >= textToType.length) {
-        console.log('executing')
-        console.log(texts[currentTextIndex + 1] === null)
-        if (texts[currentTextIndex + 1] === null) {
+        if (currentTextIndex === texts.length - 1) {
           setCurrentTextIndex(0)
         } else {
-          console.log('next index' + currentTextIndex + 1)
           // Update currentTextIndex when Enter key is pressed
           setCurrentTextIndex(currentTextIndex + 1)
           // Reset typingText to an empty string for the next textToType
@@ -43,11 +40,39 @@ function App() {
       }
     }
   }
+  const handleDeleteKeyPress = (event) => {
+    if (event.key === 'Backspace' && typingText.length > 0) {
+      if (typingText.endsWith('/n')) {
+        setTypingText(typingText.slice(0, -2))
+      }
+    }
+  }
+  function simulateKeyPress(keyCode) {
+    // Create a new keyboard event
+    var event = new KeyboardEvent('keydown', {
+      bubbles: true,
+      keyCode: keyCode,
+    })
+
+    // Dispatch the event on the document
+    document.dispatchEvent(event)
+  }
   useEffect(() => {
     // Add event listener for Enter key press
     document.addEventListener('keydown', handleEnterKeyPress)
     // Remove the event listener when component unmounts
-  }, [])
+    return () => {
+      document.removeEventListener('keydown', handleEnterKeyPress)
+    }
+  }, [currentTextIndex])
+  useEffect(() => {
+    // Add event listener for Enter key press
+    document.addEventListener('keydown', handleDeleteKeyPress)
+    // Remove the event listener when component unmounts
+    return () => {
+      document.removeEventListener('keydown', handleDeleteKeyPress)
+    }
+  }, [typingText])
   useEffect(() => {
     console.log(currentTextIndex)
     setTextToType(texts[currentTextIndex])
