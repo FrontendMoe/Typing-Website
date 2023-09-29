@@ -10,11 +10,12 @@ import { BsChevronUp } from 'react-icons/bs'
 import Login from './components/login'
 import BuyingCoffee from './components/BuyingCoffe'
 import BottomBox from './components/BottomBox'
+import texts from './texts.json'
 function App() {
   const inputRef = useRef(null)
-  const [textToType] = useState<string>(
-    'hello/nfrom other side , why do you cry',
-  )
+
+  const [currentTextIndex, setCurrentTextIndex] = useState<number>(0)
+  const [textToType, setTextToType] = useState<string>(texts[currentTextIndex])
   const [typingText, setTypingText] = useState<string>('')
   const [calculs, setCalculs] = useState<boolean>(true)
   const [showLogin, setShowLogin] = useState<boolean>(false)
@@ -26,6 +27,34 @@ function App() {
   const [startTime, setStartTime] = useState<number | null>(null)
   const [buyingCoffee, setBuyingCoffee] = useState<boolean>(false)
   const [openBottomBox, setOpenBottonBox] = useState<boolean>(false)
+  const handleEnterKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      if (inputRef.current.value.length >= textToType.length) {
+        if (currentTextIndex === texts.length - 1) {
+          setCurrentTextIndex(0)
+        } else {
+          // Update currentTextIndex when Enter key is pressed
+          setCurrentTextIndex(currentTextIndex + 1)
+          // Reset typingText to an empty string for the next textToType
+        }
+      }
+    }
+  }
+  useEffect(() => {
+    // Add event listener for Enter key press
+    document.addEventListener('keydown', handleEnterKeyPress)
+    // Remove the event listener when component unmounts
+    return () => {
+      document.removeEventListener('keydown', handleEnterKeyPress)
+    }
+  }, [currentTextIndex])
+  useEffect(() => {
+    console.log(currentTextIndex)
+    setTextToType(texts[currentTextIndex])
+    setTextShown(texts[currentTextIndex])
+    setTypingText('')
+    inputRef.current.value = ''
+  }, [currentTextIndex])
   useEffect(() => {
     $('#textArea').focus()
   }, [])
