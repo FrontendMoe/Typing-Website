@@ -47,16 +47,7 @@ function App() {
       }
     }
   }
-  function simulateKeyPress(keyCode) {
-    // Create a new keyboard event
-    var event = new KeyboardEvent('keydown', {
-      bubbles: true,
-      keyCode: keyCode,
-    })
 
-    // Dispatch the event on the document
-    document.dispatchEvent(event)
-  }
   useEffect(() => {
     // Add event listener for Enter key press
     document.addEventListener('keydown', handleEnterKeyPress)
