@@ -30,9 +30,12 @@ function App() {
   const handleEnterKeyPress = (event) => {
     if (event.key === 'Enter') {
       if (inputRef.current.value.length >= textToType.length) {
-        if (currentTextIndex === texts.length - 1) {
+        console.log('executing')
+        console.log(texts[currentTextIndex + 1] === null)
+        if (texts[currentTextIndex + 1] === null) {
           setCurrentTextIndex(0)
         } else {
+          console.log('next index' + currentTextIndex + 1)
           // Update currentTextIndex when Enter key is pressed
           setCurrentTextIndex(currentTextIndex + 1)
           // Reset typingText to an empty string for the next textToType
@@ -40,40 +43,11 @@ function App() {
       }
     }
   }
-  const handleDeleteKeyPress = (event) => {
-    if (event.key === 'Backspace' && typingText.length > 0) {
-      // Check if the last two characters are '/n'
-      if (typingText.endsWith('/n')) {
-        // Check if the character before '/n' is a line break
-        if (typingText.charAt(typingText.length - 2) === '\n') {
-          // Remove the last two characters from typingText
-          setTypingText(typingText.slice(0, -2))
-        } else {
-          // Remove only the last character from typingText
-          setTypingText(typingText.slice(0, -1))
-        }
-      } else {
-        // Remove only the last character from typingText
-        setTypingText(typingText.slice(0, -1))
-      }
-    }
-  }
   useEffect(() => {
     // Add event listener for Enter key press
     document.addEventListener('keydown', handleEnterKeyPress)
     // Remove the event listener when component unmounts
-    return () => {
-      document.removeEventListener('keydown', handleEnterKeyPress)
-    }
-  }, [currentTextIndex])
-  useEffect(() => {
-    // Add event listener for Enter key press
-    document.addEventListener('keydown', handleDeleteKeyPress)
-    // Remove the event listener when component unmounts
-    return () => {
-      document.removeEventListener('keydown', handleDeleteKeyPress)
-    }
-  }, [typingText])
+  }, [])
   useEffect(() => {
     console.log(currentTextIndex)
     setTextToType(texts[currentTextIndex])
